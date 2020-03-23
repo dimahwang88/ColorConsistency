@@ -2,10 +2,11 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
-#include <Windows.h>
+// #include <Windows.h>
 #include "cv.h"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
+#include <set>
 
 using namespace std;
 using namespace cv;
@@ -52,7 +53,9 @@ namespace Utils
 	};
 
 	// ********** tool function list ********** //
-	vector<string> get_filelist(string foldname);
+	// vector<string> get_filelist(string foldname);
+	std::vector<std::string> get_filelist(string foldname);
+
 	//! detect roi regions
 	void findBinaryROIMask(Mat &image, vector<int> &roiIndexs);
 	//! extract pixels in overlaps

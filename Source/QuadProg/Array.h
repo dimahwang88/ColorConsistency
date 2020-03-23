@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <cmath>
 #include <cstdlib>
+#include <math.h>
 
 namespace QPArray
 {
@@ -2073,7 +2074,7 @@ namespace QPArray
 				{
 					if (sum <= 0.0)
 						throw std::logic_error("Error in Cholesky decomposition: matrix is not postive definite");
-					LL[i][i] = sqrt(sum);
+					LL[i][i] = std::sqrt(sum);
 				}
 				else
 					LL[j][i] = sum / LL[i][i];

@@ -2,43 +2,60 @@
 
 using namespace Utils;
 
-vector<string> Utils::get_filelist(string foldname)
-{
-	string foldName_copy = foldname;
-	foldname += "/*.*";
-	const char * mystr=foldname.c_str();
-	vector<string> flist;
-	string lineStr;
-	vector<string> extendName;
-	extendName.push_back("jpg");
-	extendName.push_back("JPG");
-	extendName.push_back("bmp");
-	extendName.push_back("png");
-	extendName.push_back("tif");
+#include <sstream> // for ostringstream
 
-	HANDLE file;
-	WIN32_FIND_DATA fileData;
-	char line[1024];
-	wchar_t fn[1000];
-	mbstowcs(fn,mystr,999);
-	file = FindFirstFile(fn, &fileData);
-	FindNextFile(file, &fileData);
-	while(FindNextFile(file, &fileData))
+std::vector<std::string> Utils::get_filelist(string foldname)
+{
+	std::cout << "foldername: " << foldname << std::endl;
+	std::vector<std::string> flist;
+	std::ostringstream out;  
+
+	for (int i=0; i< 10; i++)
 	{
-		wcstombs(line,(const wchar_t*)fileData.cFileName,259);
-		lineStr = line;
-		for (int i = 0; i < 5; i ++)       //ÅÅ³ý·ÇÍ¼ÏñÎÄ¼þ
-		{
-			if (lineStr.find(extendName[i]) < 999)
-			{
-				lineStr = foldName_copy + "/" + lineStr;
-				flist.push_back(lineStr);
-				break;
-			}
-		}	
+		out << foldname << "IMG_2055 Panorama000" << to_string(i) << ".tif";
+		flist.push_back(out.str());
 	}
+
 	return flist;
 }
+
+// vector<string> Utils::get_filelist(string foldname)
+// {
+// 	string foldName_copy = foldname;
+// 	foldname += "/*.*";
+// 	const char * mystr=foldname.c_str();
+// 	vector<string> flist;
+// 	string lineStr;
+// 	vector<string> extendName;
+// 	extendName.push_back("jpg");
+// 	extendName.push_back("JPG");
+// 	extendName.push_back("bmp");
+// 	extendName.push_back("png");
+// 	extendName.push_back("tif");
+
+// 	HANDLE file;
+// 	WIN32_FIND_DATA fileData;
+// 	char line[1024];
+// 	wchar_t fn[1000];
+// 	mbstowcs(fn,mystr,999);
+// 	file = FindFirstFile(fn, &fileData);
+// 	FindNextFile(file, &fileData);
+// 	while(FindNextFile(file, &fileData))
+// 	{
+// 		wcstombs(line,(const wchar_t*)fileData.cFileName,259);
+// 		lineStr = line;
+// 		for (int i = 0; i < 5; i ++)
+// 		{
+// 			if (lineStr.find(extendName[i]) < 999)
+// 			{
+// 				lineStr = foldName_copy + "/" + lineStr;
+// 				flist.push_back(lineStr);
+// 				break;
+// 			}
+// 		}	
+// 	}
+// 	return flist;
+// }
 
 
 void Utils::findBinaryROIMask(Mat &image, vector<int> &roiIndexs)
@@ -86,8 +103,8 @@ void Utils::findBinaryROIMask(Mat &image, vector<int> &roiIndexs)
 
 vector<int> Utils::intersectROIs(const vector<int> &roiIndexs1, const vector<int> &roiIndexs2)
 {
-	multiset<int> iset1(begin(roiIndexs1),end(roiIndexs1));  
-	multiset<int> iset2(begin(roiIndexs2),end(roiIndexs2));  
+	std::multiset<int> iset1(begin(roiIndexs1),end(roiIndexs1));  
+	std::multiset<int> iset2(begin(roiIndexs2),end(roiIndexs2));  
 	vector<int> intersection(25000000);
 	auto iter = Utils::set_intersection(iset1.begin(),iset1.end(),iset2.begin(),iset2.end(), intersection.begin());
 	intersection.resize(iter-intersection.begin());

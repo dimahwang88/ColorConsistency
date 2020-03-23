@@ -944,11 +944,11 @@ double ToneUnifier::calInterpCoeff(double xi, double x1, double x2, double x3)
 	//! check required conditions
 	if (t1 >= -1e-7 && t1 <= 1+1e-7)
 	{
-		return min(1, max(t1,0));
+		return min(1.0, max(t1,0.0));
 	}
 	else if (t2 >= -1e-7 && t2 <= 1+1e-7)
 	{
-		return min(1, max(t2,0));
+		return min(1.0, max(t2,0.0));
 	}
 	else
 	{

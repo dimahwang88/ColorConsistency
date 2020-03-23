@@ -8,7 +8,7 @@
 using namespace std;
 using namespace cv;
 
-void main()
+int main()
  {
 	cout<<"# Running CoColour ..."<<endl;
 	clock_t start_time, end_time;
@@ -23,4 +23,6 @@ void main()
 
 	end_time = clock();
 	cout<<"# All done! Consumed "<<double(end_time-start_time)/CLOCKS_PER_SEC<<" seconds"<<endl;
+
+	return -1;
 }
