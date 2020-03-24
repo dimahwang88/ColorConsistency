@@ -210,7 +210,7 @@ void ToneUnifier::setCtrlPoints(const Mat &image, int imgIndex)
 		{
 			double xi = ctrlVals[i];
 			Point2d point(xi,xi);
-			circle(image, Point2i(xi,xi), 1, Scalar(255,0,0), -1);
+			circle(image, Point2i((int)xi,(int)xi), 1, Scalar(255,0,0), 2);
 			cv::imwrite("_ctrl_pts"+to_string(imgIndex)+".jpg", image);
 			_imageInforList[imgIndex].ctrlPoints[t].push_back(point);
 		}
