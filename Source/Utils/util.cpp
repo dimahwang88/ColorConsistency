@@ -63,7 +63,7 @@ void Utils::findBinaryROIMask(Mat &image, vector<int> &roiIndexs)
 {
 	int rows = image.rows, cols = image.cols;
 
-	std::cout << __FUNCTION__ << "$" << rows << " " << cols << std::endl;
+	std::cout << __FUNCTION__ << "$ " << rows << " " << cols << std::endl;
 //	Mat maski(rows, cols, CV_8UC1, Scalar(0));
 	uchar* imgPtr = (uchar*)image.data;
 //	uchar* mskPtr = (uchar*)maski.data;
@@ -97,7 +97,7 @@ void Utils::findBinaryROIMask(Mat &image, vector<int> &roiIndexs)
 		}
 	}
 
-	std::cout << __FUNCTION__ << "$" << roiIndexs.size() << std::endl;
+	std::cout << __FUNCTION__ << "$ " << roiIndexs.size() << std::endl;
 
 	// static int no = 0;
 	// char name[512];
