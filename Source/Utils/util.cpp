@@ -13,7 +13,7 @@ std::vector<std::string> Utils::get_filelist(string foldname)
 	for (int i=0; i< 10; i++)
 	{
 		string filename = foldname + "/IMG_2055_Panorama000" + to_string(i) + ".tif";
-		std::cout << __FUNCTION__ << "-" << filename << std::endl; 
+		// std::cout << __FUNCTION__ << "-" << filename << std::endl; 
 		flist.push_back(filename);
 	}
 
@@ -94,11 +94,11 @@ void Utils::findBinaryROIMask(Mat &image, vector<int> &roiIndexs)
 			roiIndexs.push_back(i*cols+j);
 		}
 	}
-/*	static int no = 0;
-	char name[512];
-	sprintf(name, "Mask/ROImask%03d.png", no++);
-	string savePath = Utils::baseDir + string(name);
-	imwrite(savePath, maski);*/
+	// static int no = 0;
+	// char name[512];
+	// sprintf(name, "Mask/ROImask%03d.png", no++);
+	// string savePath = Utils::baseDir + string(name);
+	// imwrite(savePath, maski);
 }
 
 

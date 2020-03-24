@@ -131,7 +131,7 @@ void ToneUnifier::buildCorrespondings()
 			//! covert to Lab color space
 			Mat adjImagef = RGB2YCbCr(adjImage, _imageInforList[adjNo].ROIIndexList);
 			vector<int> overlapIndexs = Utils::intersectROIsPro(_imageInforList[i].ROIIndexList, _imageInforList[adjNo].ROIIndexList);
-			if (0)
+			if (1)
 			{
 				int cols = curImage.cols;
 				for (int p = 0; p < overlapIndexs.size(); p ++)
@@ -139,7 +139,7 @@ void ToneUnifier::buildCorrespondings()
 					int r = overlapIndexs[p]/cols, c = overlapIndexs[p]%cols;
 					circle(curImage, Point2i(c,r), 1, Scalar(255,0,0), -1);
 				}
-				string path = Utils::baseDir + "overlap.png";
+				string path = Utils::baseDir + "overlap_" + to_string(j) + ".png";
 				imwrite(path, curImage);
 			}
 			vector<double> *ROIPixels1 = Utils::extractROIPixels(curImagef, overlapIndexs);
