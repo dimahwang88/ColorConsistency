@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 	clock_t start_time, end_time;
 	start_time = clock();
 
-	Utils::baseDir = argv[1];
+	// Utils::baseDir = argv[1];
 
 	// std::cout << "argv[1]: " << argv[1] << std::endl;
 	// std::cout << "base directory: " << Utils::baseDir << std::endl;
