@@ -48,6 +48,8 @@ void ToneUnifier::initialization()
 {
 	cout<<"-Initializing ..."<<endl;
 	string paramPath = Utils::baseDir + "Cache/ParamsPro.txt";
+	std::cout << "parameter path: " << paramPath << std::endl;
+
 	ifstream fin;
 	fin.open(paramPath.c_str(), ios::in);
 	if (!fin.is_open())
@@ -76,6 +78,8 @@ void ToneUnifier::initialization()
 	for (int i = 0; i < _imgNum; i ++)
 	{
 		Mat image = imread(_filePathList[i], -1);
+
+		std::cout << "image path: " << _filePathList[i] << std::endl;
 		if (image.channels() == 1)
 		{
 			cout<<"Your input are gray images!"<<endl;
@@ -1039,16 +1043,23 @@ void ToneUnifier::outputEvaluationReport()
 		compareColorDiff(t, colorDiffs[t][0], colorDiffs[t][1]);
 	}
 
+	cout<<"# Making Evaluation Report ..."<<endl;
+
 	//! gradient detail
-	double aveGradDiff = 0;
-	//! in the order of imgIndex
-	for (int i = 0; i < _imgNum; i ++)
-	{
-		Mat srcImage = imread(_filePathList[i], 0);
-		Mat dstImage = imread(_savePathList[i], 0);
-		aveGradDiff += Utils::calStructuralDiffs(srcImage, dstImage, _imageInforList[i].ROIIndexList);
-	}
-	aveGradDiff = 10*aveGradDiff/_imgNum;
+	// double aveGradDiff = 0;
+	// //! in the order of imgIndex
+	// for (int i = 0; i < _imgNum; i ++)
+	// {
+	// 	std::cout << _filePathList[i] << std::endl;
+	// 	Mat srcImage = imread(_filePathList[i], 0);
+	// 	Mat dstImage = imread(_savePathList[i], 0);
+	
+	// 	cout<<"# Making Evaluation Report ..."<<endl;
+
+	// 	aveGradDiff += Utils::calStructuralDiffs(srcImage, dstImage, _imageInforList[i].ROIIndexList);
+	// }
+
+	// aveGradDiff = 10*aveGradDiff/_imgNum;
 	double runTime = double(_etime-_stime)/CLOCKS_PER_SEC;
 	string savePath = Utils::baseDir + "report.txt";
 	ofstream fout;
@@ -1059,7 +1070,7 @@ void ToneUnifier::outputEvaluationReport()
 	fout<<"-original :"<<colorDiffs[0][0]<<" "<<colorDiffs[1][0]<<" "<<colorDiffs[2][0]<<"  mean:"<<(colorDiffs[0][0]+colorDiffs[1][0]+colorDiffs[2][0])/3<<endl;
 	fout<<"-corrected:"<<colorDiffs[0][1]<<" "<<colorDiffs[1][1]<<" "<<colorDiffs[2][1]<<"  mean:"<<(colorDiffs[0][1]+colorDiffs[1][1]+colorDiffs[2][1])/3<<endl;
 	fout<<"# Gradient Difference"<<endl;
-	fout<<"-deviation:"<<aveGradDiff<<endl;
+	// fout<<"-deviation:"<<aveGradDiff<<endl;
 	fout.close();
 	cout<<"-Done!"<<endl;
 }

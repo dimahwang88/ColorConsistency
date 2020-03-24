@@ -8,13 +8,18 @@
 using namespace std;
 using namespace cv;
 
-int main()
+int main(int argc, char* argv[])
  {
 	cout<<"# Running CoColour ..."<<endl;
 	clock_t start_time, end_time;
 	start_time = clock();
 
-	string dataDir = Utils::baseDir + "Images";
+	Utils::baseDir = argv[1];
+
+	// std::cout << "argv[1]: " << argv[1] << std::endl;
+	// std::cout << "base directory: " << Utils::baseDir << std::endl;
+
+	string dataDir = Utils::baseDir + "/Images";
 	vector<string> filePathList = Utils::get_filelist(dataDir);
 	cout<<"-Loaded "<<filePathList.size()<<" files."<<endl;
 
