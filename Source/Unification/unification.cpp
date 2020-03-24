@@ -131,7 +131,7 @@ void ToneUnifier::buildCorrespondings()
 			//! covert to Lab color space
 			Mat adjImagef = RGB2YCbCr(adjImage, _imageInforList[adjNo].ROIIndexList);
 			vector<int> overlapIndexs = Utils::intersectROIsPro(_imageInforList[i].ROIIndexList, _imageInforList[adjNo].ROIIndexList);
-			if (1)
+			if (0)
 			{
 				int cols = curImage.cols;
 				for (int p = 0; p < overlapIndexs.size(); p ++)
@@ -210,6 +210,8 @@ void ToneUnifier::setCtrlPoints(const Mat &image, int imgIndex)
 		{
 			double xi = ctrlVals[i];
 			Point2d point(xi,xi);
+			circle(image, Point2i(xi,xi), 1, Scalar(255,0,0), -1);
+			cv::imwrite("_ctrl_pts"+to_string(imgIndex)+".jpg", image);
 			_imageInforList[imgIndex].ctrlPoints[t].push_back(point);
 		}
 	}
