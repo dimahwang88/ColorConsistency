@@ -15,7 +15,8 @@ namespace Utils
 {
 	// ********** global variable list ********** //
 	// static string baseDir = "C:/Users/Richard/Desktop/Release/Data/";
-	static string baseDir = "/Users/dmitriy.khvan/Desktop/bepro11/code/ColorConsistency/Data/";
+	// static string baseDir = "/Users/dmitriy.khvan/Desktop/bepro11/code/ColorConsistency/Data/";
+	static string baseDir = "/home/bepro/ColorConsistency/Data/";
 
 	// ********** data struct list ********** //
 	struct InterpInfo         //! record the NO. of involved ctrl-point for interpolation
