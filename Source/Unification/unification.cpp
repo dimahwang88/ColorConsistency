@@ -131,6 +131,7 @@ void ToneUnifier::buildCorrespondings()
 			//! covert to Lab color space
 			Mat adjImagef = RGB2YCbCr(adjImage, _imageInforList[adjNo].ROIIndexList);
 			vector<int> overlapIndexs = Utils::intersectROIsPro(_imageInforList[i].ROIIndexList, _imageInforList[adjNo].ROIIndexList);
+			
 			if (0)
 			{
 				int cols = curImage.cols;
@@ -142,6 +143,7 @@ void ToneUnifier::buildCorrespondings()
 				string path = Utils::baseDir + "overlap_" + to_string(j) + ".png";
 				imwrite(path, curImage);
 			}
+			
 			vector<double> *ROIPixels1 = Utils::extractROIPixels(curImagef, overlapIndexs);
 			vector<double> *ROIPixels2 = Utils::extractROIPixels(adjImagef, overlapIndexs);
 			vector<Adjacency> neigNeigbList = _imageInforList[adjNo].neigbList;
@@ -210,8 +212,8 @@ void ToneUnifier::setCtrlPoints(const Mat &image, int imgIndex)
 		{
 			double xi = ctrlVals[i];
 			Point2d point(xi,xi);
-			circle(image, Point2i((int)xi,(int)xi), 1, Scalar(255,0,0), 2);
-			cv::imwrite("_ctrl_pts"+to_string(imgIndex)+".jpg", image);
+			//circle(image, Point2i((int)xi,(int)xi), 1, Scalar(255,0,0), 2);
+			// cv::imwrite("_ctrl_pts"+to_string(imgIndex)+".jpg", image);
 			_imageInforList[imgIndex].ctrlPoints[t].push_back(point);
 		}
 	}
