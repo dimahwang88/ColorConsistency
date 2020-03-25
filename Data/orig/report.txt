@@ -1,0 +1,5 @@
+Algorithm running time:6.05330 s
+# Color Disparity
+-original :28.73386 11.74327 14.46449  mean:18.31387
+-corrected:6.12014 2.38546 1.93906  mean:3.48155
+# Gradient Difference
