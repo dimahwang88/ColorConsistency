@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	// std::cout << "argv[1]: " << argv[1] << std::endl;
 	// std::cout << "base directory: " << Utils::baseDir << std::endl;
 
-	string dataDir = Utils::baseDir + "/Images";
+	string dataDir = Utils::baseDir + "Images";
 	vector<string> filePathList = Utils::get_filelist(dataDir);
 	cout<<"-Loaded "<<filePathList.size()<<" files."<<endl;
 
