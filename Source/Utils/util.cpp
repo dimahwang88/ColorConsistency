@@ -13,7 +13,7 @@ std::vector<std::string> Utils::get_filelist(string foldname)
 	for (int i=0; i< 3; i++)
 	{
 		// string filename = foldname + "/IMG_2055_Panorama000" + to_string(i) + ".tif";
-		string filename = foldname + "/IMG_2055_Panorama000" + to_string(i) + ".jpg";
+		string filename = foldname + "/res_" + to_string(i) + ".jpg";
 		// std::cout << __FUNCTION__ << "-" << filename << std::endl; 
 		flist.push_back(filename);
 	}
