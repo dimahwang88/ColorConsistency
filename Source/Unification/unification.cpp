@@ -790,6 +790,8 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 	//! warp images in the order of their ID, namely imgNo
 	for (int i = 0; i < _imgNum; i ++)
 	{
+		if (i!=0)	continue;
+		
 		cout<<"-Compositing image "<<i<<" ... "<<endl;
 		int curIndex = findImageIndex(i);
 		vector<int> roiIndexList = _imageInforList[curIndex].ROIIndexList;
