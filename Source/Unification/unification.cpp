@@ -793,10 +793,15 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 	Mat baseImage(rows, cols, CV_8UC3, Scalar(BKGRNDPIX, BKGRNDPIX, BKGRNDPIX));
 	uchar *basePtr = (uchar*)baseImage.data;
 	//! warp images in the order of their ID, namely imgNo
+	vector<int> indices = {0,2,1};
+
 	for (int i = 0; i < _imgNum; i ++)
 	{
-		cout<<"-Compositing image "<<i<<" ... "<<endl;
-		int curIndex = findImageIndex(i);
+		int im_num = indices[i];
+
+		cout<<"-Compositing image "<< im_num <<" ... "<<endl;
+		int curIndex = findImageIndex(im_num);
+
 		vector<int> roiIndexList = _imageInforList[curIndex].ROIIndexList;
 		Mat curImage = imread(_filePathList[curIndex]);
 		//! covert to YcrCb color space
@@ -853,7 +858,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		if (needIndividuals)
 		{
 			char name[512];
-			sprintf(name, "Results/R_IMG%03d.png", i);
+			sprintf(name, "Results/R_IMG%03d.png", im_num);
 			string savePath = Utils::baseDir + string(name);
 			imwrite(savePath, warpMap);
 		}
@@ -864,14 +869,14 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 	 
 	imwrite(path, baseImage);
 	//! save in the order by imgIndex, the same as in '_filePathList'
-	for (int i = 0; i < _imgNum; i ++)
-	{
-		int imgNo = _imageInforList[i].imgNo;
-		char name[512];
-		sprintf(name, "Results/R_IMG%03d.png", imgNo);
-		string savePath = Utils::baseDir + string(name);
-		_savePathList.push_back(savePath);
-	}
+	// for (int i = 0; i < _imgNum; i ++)
+	// {
+	// 	int imgNo = _imageInforList[i].imgNo;
+	// 	char name[512];
+	// 	sprintf(name, "Results/R_IMG%03d.png", imgNo);
+	// 	string savePath = Utils::baseDir + string(name);
+	// 	_savePathList.push_back(savePath);
+	// }
 	cout<<"-Done!"<<endl;
 }
 
