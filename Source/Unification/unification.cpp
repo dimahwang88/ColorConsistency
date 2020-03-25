@@ -795,6 +795,8 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		vector<int> roiIndexList = _imageInforList[curIndex].ROIIndexList;
 		Mat curImage = imread(_filePathList[curIndex]);
 		//! covert to YcrCb color space
+		cv::imwrite("./conv_orig_"+to_string(i)+".jpg", curImage);
+
 		Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiIndexList);
 		
 		///////////////////////
