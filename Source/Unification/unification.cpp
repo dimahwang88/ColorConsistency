@@ -94,8 +94,8 @@ void ToneUnifier::initialization()
 		cv::Mat roi_mask = cv::imread(Utils::baseDir + "Images/"+"res_roi_" + to_string(i) + ".jpg");
 		assert(!roi_mask.empty());
 
-		Utils::findBinaryROIMask(image, _imageInforList[i].ROIIndexList);
-		// Utils::findBinaryROIMask(roi_mask, _imageInforList[i].ROIIndexList);
+		// Utils::findBinaryROIMask(image, _imageInforList[i].ROIIndexList);
+		Utils::findBinaryROIMask(roi_mask, _imageInforList[i].ROIIndexList);
 		cout<<i<<"  ";
 		if ((i+1)%10 == 0)
 		{
