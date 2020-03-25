@@ -10,7 +10,7 @@ std::vector<std::string> Utils::get_filelist(string foldname)
 	std::vector<std::string> flist;
 	std::ostringstream out;  
 
-	for (int i=0; i< 10; i++)
+	for (int i=0; i< 3; i++)
 	{
 		// string filename = foldname + "/IMG_2055_Panorama000" + to_string(i) + ".tif";
 		string filename = foldname + "/IMG_2055_Panorama000" + to_string(i) + ".jpg";
