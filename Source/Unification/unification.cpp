@@ -784,6 +784,7 @@ inline double ToneUnifier::interpValuebyLinear(double xi, const vector<Point2d> 
 
 void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyRemapping)
 {
+	applyRemapping = false;
 	int rows = _imgSize.height, cols = _imgSize.width;
 	Mat baseImage(rows, cols, CV_8UC3, Scalar(BKGRNDPIX, BKGRNDPIX, BKGRNDPIX));
 	uchar *basePtr = (uchar*)baseImage.data;
@@ -791,7 +792,6 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 	for (int i = 0; i < _imgNum; i ++)
 	{
 		if (i!=0)	continue;
-		
 		cout<<"-Compositing image "<<i<<" ... "<<endl;
 		int curIndex = findImageIndex(i);
 		vector<int> roiIndexList = _imageInforList[curIndex].ROIIndexList;
