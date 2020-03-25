@@ -846,6 +846,9 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		}
 	}
 	string path = Utils::baseDir + "mosaic.png";
+
+	std::cout << "(" << __FUNCTION__ << ")" << " " << "writing result to " << path << std::endl;
+	 
 	imwrite(path, baseImage);
 	//! save in the order by imgIndex, the same as in '_filePathList'
 	for (int i = 0; i < _imgNum; i ++)
