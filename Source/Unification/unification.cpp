@@ -784,20 +784,24 @@ inline double ToneUnifier::interpValuebyLinear(double xi, const vector<Point2d> 
 
 void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyRemapping)
 {
-	applyRemapping = false;
 	int rows = _imgSize.height, cols = _imgSize.width;
 	Mat baseImage(rows, cols, CV_8UC3, Scalar(BKGRNDPIX, BKGRNDPIX, BKGRNDPIX));
 	uchar *basePtr = (uchar*)baseImage.data;
 	//! warp images in the order of their ID, namely imgNo
 	for (int i = 0; i < _imgNum; i ++)
 	{
-		if (i!=0)	continue;
 		cout<<"-Compositing image "<<i<<" ... "<<endl;
 		int curIndex = findImageIndex(i);
 		vector<int> roiIndexList = _imageInforList[curIndex].ROIIndexList;
 		Mat curImage = imread(_filePathList[curIndex]);
 		//! covert to YcrCb color space
 		Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiIndexList);
+		
+		///////////////////////
+		cv::Mat curImage_tmp = ColorSpace::YCbCr2RGB(curImagef);
+		cv::imwrite("./conv_y2rgb_"+to_string(i)+".jpg", curImage_tmp);
+		///////////////////////
+
 		if (applyRemapping)
 		{
 			updateImagebyRemapping(curImagef, curIndex);
