@@ -14,7 +14,8 @@ using namespace std;
 using namespace cv;
 
 #define PARAM_NUM 6
-#define SAMPLE_FREQ_NUM 25          //! used only for the final step : pixel-mapping (the more, the more smooth curve)
+// #define SAMPLE_FREQ_NUM 15          //! used only for the final step : pixel-mapping (the more, the more smooth curve)
+#define SAMPLE_FREQ_NUM 50          //! used only for the final step : pixel-mapping (the more, the more smooth curve)
 #define BKGRNDPIX 255
 
 
