@@ -789,6 +789,7 @@ inline double ToneUnifier::interpValuebyLinear(double xi, const vector<Point2d> 
 
 void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyRemapping)
 {
+	applyRemapping = false;
 	int rows = _imgSize.height, cols = _imgSize.width;
 	Mat baseImage(rows, cols, CV_8UC3, Scalar(BKGRNDPIX, BKGRNDPIX, BKGRNDPIX));
 	uchar *basePtr = (uchar*)baseImage.data;
