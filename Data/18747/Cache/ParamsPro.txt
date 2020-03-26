@@ -1,0 +1,9 @@
+0 1
+1 
+
+1 1
+0
+
+!!!Format Specification:
+#image_id  #neigbor_num
+#neigbor_image_id  ...
