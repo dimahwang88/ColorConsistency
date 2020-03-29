@@ -854,20 +854,18 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 			// updateImagebyRemapping(curImagef, curIndex);
 			updateImagebyRemapping(curImagef_64f, curIndex);
 		}
-
-
-		// std::cout << blendMap_64f.type() << " " << blendMap_64f.size() << std::endl;
-		// std::cout << curImagef.type() << " " << curImagef.size() << std::endl;
-		
 		//A: 
 		// 1. multiply YCbCr by blend-seam map here
 		cv::multiply(curImagef_64f, blendMap_64f, curImagef_64f);
 
-		//B:
-		// 1. convert image back to RGB
-		// 2. convert data type to 32F
-		// 3. multiply RGB by blend-seam map here
-		// 4. convert back to YCbCr
+		// test ycbcr after blend map mutliplication:
+		// 1. convert to u8
+		// 2. YCbCr -> RGB
+		cv::Mat tmp_u8;
+		cv::Mat tmp_rgb;
+		curImagef_64f.convertTo(tmp_u8, CV_8U);
+		cv::cvtColor(tmp_u8, tmp_rgb, cv::COLOR_YCrCb2RGB);
+		cv::imwrite("./_tmp_mult_"+to_string(i)+".jpg", tmp_rgb);
 
 		// double* dataPtr = (double*)curImagef.data;
 		double* dataPtr = (double*)curImagef_64f.data;
