@@ -846,7 +846,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		uchar *warpPtr = (uchar*)warpMap.data;
 
 		// 5. update ROI index list to only those present in blend-seam map
-		_helper_update_roi_indices(roiIndexList, blendMapf);
+		// _helper_update_roi_indices(roiIndexList, blendMapf);
 
 		for (int j = 0; j < roiIndexList.size(); j ++)
 		{
