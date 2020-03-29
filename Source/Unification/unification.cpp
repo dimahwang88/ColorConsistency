@@ -861,6 +861,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		// test ycbcr after color mapping
 		cv::Mat cc_rgb = ColorSpace::YCbCr2RGB(curImagef_64f, roiList_seam);
 		cv::imwrite("./_tmp_cc_"+to_string(i)+".jpg", cc_rgb);
+#endif
 
 		// test ycbcr after blend map mutliplication:
 		cv::Mat tmp_rgb_64f;
@@ -870,8 +871,11 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		cv::multiply(tmp_rgb_64f, blendMap_64f, tmp_rgb_64f);
 		tmp_rgb_64f.convertTo(tmp_rgb_u8, CV_8U);
 		cv::imwrite("./_tmp_mult_"+to_string(i)+".jpg", tmp_rgb_u8);
-#endif
 
+		cv::cuda::add(baseImage, tmp_rgb_u8, baseImage);
+
+		continue;
+		
 		// double* dataPtr = (double*)curImagef.data;
 		double* dataPtr = (double*)curImagef_64f.data;
 
