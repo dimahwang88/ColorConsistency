@@ -858,17 +858,23 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		}
 		//A: 
 		// 1. multiply YCbCr by blend-seam map here
-		cv::multiply(curImagef_64f, blendMap_64f, curImagef_64f);
+		// cv::multiply(curImagef_64f, blendMap_64f, curImagef_64f);
 
 #ifdef DBG
 		// test ycbcr after blend map mutliplication:
 		cv::Mat tmp_u8;
-		// cv::Mat tmp_rgb;
-		curImagef_64f.convertTo(tmp_u8, CV_8U);
-		// cv::cvtColor(tmp_u8, tmp_rgb, cv::COLOR_YCrCb2RGB);
-		Mat tmp_rgb = ColorSpace::YCbCr2RGB(tmp_u8, roiList_seam);
+		cv::Mat tmp_rgb;
+		cv::Mat tmp_rgb_64;
 
-		cv::imwrite("./_tmp_mult_"+to_string(i)+".jpg", tmp_rgb);
+		cv::cvtColor(curImagef_64f, tmp_rgb_64, cv::COLOR_YCrCb2RGB);
+		cv::multiply(tmp_rgb_64, blendMap_64f, tmp_rgb_64);
+		tmp_rgb_64.convertTo(tmp_u8, CV_8U);
+		cv::imwrite("./_tmp_mult_"+to_string(i)+".jpg", tmp_u8);
+
+		// curImagef_64f.convertTo(tmp_u8, CV_8U);
+		// cv::cvtColor(tmp_u8, tmp_rgb, cv::COLOR_YCrCb2RGB);
+		// cv::multiply(curImagef_64f, blendMap_64f, curImagef_64f);
+		// cv::imwrite("./_tmp_mult_"+to_string(i)+".jpg", tmp_rgb);
 #endif
 
 		// double* dataPtr = (double*)curImagef.data;
