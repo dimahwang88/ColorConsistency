@@ -862,7 +862,6 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 
 #ifdef DBG
 		// test ycbcr after blend map mutliplication:
-		cv::Mat tmp_rgb;
 		cv::Mat tmp_rgb_64;
 
 		cv::Mat tmp_rgb = ColorSpace::YCbCr2RGB(curImagef_64f, roiList_seam);
