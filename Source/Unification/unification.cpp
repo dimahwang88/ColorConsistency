@@ -789,9 +789,9 @@ inline double ToneUnifier::interpValuebyLinear(double xi, const vector<Point2d> 
 
 void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyRemapping)
 {
-	// applyRemapping = false;
 	int rows = _imgSize.height, cols = _imgSize.width;
-	Mat baseImage(rows, cols, CV_8UC3, Scalar(BKGRNDPIX, BKGRNDPIX, BKGRNDPIX));
+	Mat baseImage(rows, cols, CV_8UC3, Scalar(0, 0, 0));
+
 	uchar *basePtr = (uchar*)baseImage.data;
 	//! warp images in the order of their ID, namely imgNo
 	vector<int> indices = {0,2,1};
@@ -820,13 +820,28 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		{
 			updateImagebyRemapping(curImagef, curIndex);
 		}
+
+		// 0. upload blend-seam map		
+		//A: 
+		// 1. multiply YCbCr by blend-seam map here
+
+		//B:
+		// 1. convert image back to RGB
+		// 2. convert data type to 32F
+		// 3. multiply RGB by blend-seam map here
+		// 4. convert back to YCbCr
+
 		double* dataPtr = (double*)curImagef.data;
 		Mat warpMap;
 		if (needIndividuals)
 		{
 			warpMap = Mat(rows, cols, CV_8UC3, Scalar(BKGRNDPIX,BKGRNDPIX,BKGRNDPIX,0));
 		}
+
 		uchar *warpPtr = (uchar*)warpMap.data;
+
+		// 5. update ROI index list to only those present in blend-seam map
+
 		for (int j = 0; j < roiIndexList.size(); j ++)
 		{
 			int index = roiIndexList[j];
@@ -834,16 +849,22 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 			double Y = dataPtr[3*index+0];        //! Y
 			double Cb = dataPtr[3*index+1]-127.5;   //! Cb-128
 			double Cr = dataPtr[3*index+2]-127.5;   //! Cr-128
+
 			int R = int(Y + 1.402*Cr);
 			int G = int(Y - 0.3441*Cb - 0.7141*Cr);
 			int B = int(Y + 1.7720*Cb);
+
 			int Bi = min(255, max(0,B));
 			int Gi = min(255, max(0,G));
 			int Ri = min(255, max(0,R));
 
-			basePtr[3*index+0] = Bi;
-			basePtr[3*index+1] = Gi;
-			basePtr[3*index+2] = Ri;
+			// basePtr[3*index+0] = Bi;
+			// basePtr[3*index+1] = Gi;
+			// basePtr[3*index+2] = Ri;
+
+			basePtr[3*index+0] += Bi;
+			basePtr[3*index+1] += Gi;
+			basePtr[3*index+2] += Ri;
 
 			if (needIndividuals)
 			{
@@ -865,6 +886,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 			imwrite(savePath, warpMap);
 		}
 	}
+
 	string path = Utils::baseDir + "mosaic.png";
 
 	std::cout << "(" << __FUNCTION__ << ")" << " " << "writing result to " << path << std::endl;
