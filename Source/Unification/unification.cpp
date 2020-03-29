@@ -825,6 +825,9 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		cv::Mat blendMapf;
 		cv::FileStorage fs(Utils::baseDir + "Images/res_seam_"+to_string(im_num) + ".json",FileStorage::READ);
 		fs["blend_mat"] >> blendMapf;
+
+		std::cout << blendMapf.type() << " " << blendMapf.size() << std::endl;
+		std::cout << curImagef.type() << " " << curImagef.size() << std::endl;
 		
 		//A: 
 		// 1. multiply YCbCr by blend-seam map here
