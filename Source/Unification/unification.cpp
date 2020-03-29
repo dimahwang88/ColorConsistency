@@ -789,6 +789,22 @@ inline double ToneUnifier::interpValuebyLinear(double xi, const vector<Point2d> 
 std::vector<int> _helper_update_roi_indices(cv::Mat& blendMapf)
 {
 	std::vector<int> ret;
+
+	double* mp = (double*)blendMapf.data;
+	
+	int rows = blendMapf.rows;
+	int cols = blendMapf.cols;
+
+	for (int i=0; i< rows; i++)
+	{
+		for (int j=0; j< cols; j++)
+		{
+			if (mp[3*(i*cols+j)+0] != 0 && mp[3*(i*cols+j)+1] != 0 && mp[3*(i*cols+j)+2] != 0)
+				ret.push_back(i*cols+j);
+
+		}
+	}
+
 	return ret;
 }
 
@@ -858,11 +874,13 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		uchar *warpPtr = (uchar*)warpMap.data;
 
 		// 5. update ROI index list to only those present in blend-seam map
-		// vector<int> roiList_seam = _helper_update_roi_indices(blendMapf);
+		vector<int> roiList_seam = _helper_update_roi_indices(blendMapf);
 
-		for (int j = 0; j < roiIndexList.size(); j ++)
+		// for (int j = 0; j < roiIndexList.size(); j ++)
+		for (int j = 0; j < roiList_seam.size(); j ++)
 		{
-			int index = roiIndexList[j];
+			// int index = roiIndexList[j];
+			int index = roiList_seam[j];
 			//! from YCbCr to RGB
 			double Y = dataPtr[3*index+0];        //! Y
 			double Cb = dataPtr[3*index+1]-127.5;   //! Cb-128
