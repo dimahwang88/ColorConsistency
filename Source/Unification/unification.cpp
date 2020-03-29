@@ -849,11 +849,6 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		cv::cvtColor(curImage, curImagef, cv::COLOR_RGB2YCrCb);
 		curImagef.convertTo(curImagef_64f, CV_64F);
 
-		///////////////////////
-		// cv::Mat curImage_tmp = ColorSpace::YCbCr2RGB(curImagef);
-		// cv::imwrite("./conv_y2rgb_"+to_string(i)+".jpg", curImage_tmp);
-		///////////////////////
-
 		if (applyRemapping)
 		{
 			// updateImagebyRemapping(curImagef, curIndex);
@@ -866,7 +861,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		
 		//A: 
 		// 1. multiply YCbCr by blend-seam map here
-		cv::multiply(curImagef_64f, blendMap_64f, curImagef);
+		cv::multiply(curImagef_64f, blendMap_64f, curImagef_64f);
 
 		//B:
 		// 1. convert image back to RGB
