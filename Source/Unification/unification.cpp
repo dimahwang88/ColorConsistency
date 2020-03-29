@@ -786,6 +786,11 @@ inline double ToneUnifier::interpValuebyLinear(double xi, const vector<Point2d> 
 	return yi;
 }
 
+std::vector<int> _helper_update_roi_indices(cv::Mat& blendMapf)
+{
+	std::vector<int> ret;
+	return ret;
+}
 
 void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyRemapping)
 {
@@ -853,7 +858,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		uchar *warpPtr = (uchar*)warpMap.data;
 
 		// 5. update ROI index list to only those present in blend-seam map
-		// _helper_update_roi_indices(roiIndexList, blendMapf);
+		// vector<int> roiList_seam = _helper_update_roi_indices(blendMapf);
 
 		for (int j = 0; j < roiIndexList.size(); j ++)
 		{
@@ -871,13 +876,13 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 			int Gi = min(255, max(0,G));
 			int Ri = min(255, max(0,R));
 
-			basePtr[3*index+0] = Bi;
-			basePtr[3*index+1] = Gi;
-			basePtr[3*index+2] = Ri;
+			// basePtr[3*index+0] = Bi;
+			// basePtr[3*index+1] = Gi;
+			// basePtr[3*index+2] = Ri;
 
-			// basePtr[3*index+0] += Bi;
-			// basePtr[3*index+1] += Gi;
-			// basePtr[3*index+2] += Ri;
+			basePtr[3*index+0] += Bi;
+			basePtr[3*index+1] += Gi;
+			basePtr[3*index+2] += Ri;
 
 			if (needIndividuals)
 			{
