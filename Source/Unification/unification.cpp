@@ -830,7 +830,6 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		vector<int> roiIndexList = _imageInforList[curIndex].ROIIndexList;
 		Mat curImage = imread(_filePathList[curIndex]);
 		//! covert to YcrCb color space
-		// cv::imwrite("./conv_orig_"+to_string(i)+".jpg", curImage);
 
 		// 0. upload blend-seam map	
 		std::cout << "reading blend maps from json file ,,, " << std::endl;
@@ -844,8 +843,6 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		// 5. update ROI index list to only those present in blend-seam map
 		vector<int> roiList_seam = _helper_update_roi_indices(blendMap_64f);
 
-		// Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiIndexList);
-		// Mat curImagef_64f = ColorSpace::RGB2YCbCr(curImage, roiList_seam);
 		cv::Mat curImagef;
 		cv::Mat curImagef_64f;
 		cv::cvtColor(curImage, curImagef, cv::COLOR_RGB2YCrCb);
@@ -853,7 +850,6 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 
 		if (applyRemapping)
 		{
-			// updateImagebyRemapping(curImagef, curIndex);
 			updateImagebyRemapping(curImagef_64f, curIndex);
 		}
 
