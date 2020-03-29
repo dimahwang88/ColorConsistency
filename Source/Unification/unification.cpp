@@ -896,13 +896,13 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 			int Gi = min(255, max(0,G));
 			int Ri = min(255, max(0,R));
 
-			// basePtr[3*index+0] = Bi;
-			// basePtr[3*index+1] = Gi;
-			// basePtr[3*index+2] = Ri;
+			basePtr[3*index+0] = Bi;
+			basePtr[3*index+1] = Gi;
+			basePtr[3*index+2] = Ri;
 
-			basePtr[3*index+0] += Bi;
-			basePtr[3*index+1] += Gi;
-			basePtr[3*index+2] += Ri;
+			// basePtr[3*index+0] += Bi;
+			// basePtr[3*index+1] += Gi;
+			// basePtr[3*index+2] += Ri;
 
 			if (needIndividuals)
 			{
