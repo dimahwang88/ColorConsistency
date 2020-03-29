@@ -830,7 +830,20 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		//! covert to YcrCb color space
 		// cv::imwrite("./conv_orig_"+to_string(i)+".jpg", curImage);
 
-		Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiIndexList);
+		// 0. upload blend-seam map	
+		std::cout << "reading blend maps from json file ,,, " << std::endl;
+		cv::Mat blendMapf;
+		cv::FileStorage fs(Utils::baseDir + "Images/res_seam_"+to_string(im_num) + ".json",FileStorage::READ);
+		fs["blend_mat"] >> blendMapf;
+
+		cv::Mat blendMap_64f;
+		blendMapf.convertTo(blendMap_64f, CV_64F);
+
+		// 5. update ROI index list to only those present in blend-seam map
+		vector<int> roiList_seam = _helper_update_roi_indices(blendMap_64f);
+
+		// Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiIndexList);
+		Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiList_seam);
 		
 		///////////////////////
 		// cv::Mat curImage_tmp = ColorSpace::YCbCr2RGB(curImagef);
@@ -842,17 +855,9 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 			updateImagebyRemapping(curImagef, curIndex);
 		}
 
-		// 0. upload blend-seam map	
-		std::cout << "reading blend maps from json file ,,, " << std::endl;
-		cv::Mat blendMapf;
-		cv::FileStorage fs(Utils::baseDir + "Images/res_seam_"+to_string(im_num) + ".json",FileStorage::READ);
-		fs["blend_mat"] >> blendMapf;
 
-		cv::Mat blendMap_64f;
-		blendMapf.convertTo(blendMap_64f, CV_64F);
-
-		std::cout << blendMap_64f.type() << " " << blendMap_64f.size() << std::endl;
-		std::cout << curImagef.type() << " " << curImagef.size() << std::endl;
+		// std::cout << blendMap_64f.type() << " " << blendMap_64f.size() << std::endl;
+		// std::cout << curImagef.type() << " " << curImagef.size() << std::endl;
 		
 		//A: 
 		// 1. multiply YCbCr by blend-seam map here
@@ -872,9 +877,6 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		}
 
 		uchar *warpPtr = (uchar*)warpMap.data;
-
-		// 5. update ROI index list to only those present in blend-seam map
-		vector<int> roiList_seam = _helper_update_roi_indices(blendMap_64f);
 
 		// for (int j = 0; j < roiIndexList.size(); j ++)
 		for (int j = 0; j < roiList_seam.size(); j ++)
