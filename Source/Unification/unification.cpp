@@ -858,15 +858,16 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		}
 		//A: 
 		// 1. multiply YCbCr by blend-seam map here
-		cv::Mat dst_tmp;
-		cv::multiply(curImagef_64f, blendMap_64f, dst_tmp);
+		cv::multiply(curImagef_64f, blendMap_64f, curImagef_64f);
 
 #ifdef DBG
 		// test ycbcr after blend map mutliplication:
 		cv::Mat tmp_u8;
-		cv::Mat tmp_rgb;
-		dst_tmp.convertTo(tmp_u8, CV_8U);
-		cv::cvtColor(tmp_u8, tmp_rgb, cv::COLOR_YCrCb2RGB);
+		// cv::Mat tmp_rgb;
+		curImagef_64f.convertTo(tmp_u8, CV_8U);
+		// cv::cvtColor(tmp_u8, tmp_rgb, cv::COLOR_YCrCb2RGB);
+		Mat tmp_rgb = ColorSpace::YCbCr2RGB(tmp_u8, roiList_seam);
+
 		cv::imwrite("./_tmp_mult_"+to_string(i)+".jpg", tmp_rgb);
 #endif
 
