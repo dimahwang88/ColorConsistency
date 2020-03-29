@@ -843,8 +843,12 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		vector<int> roiList_seam = _helper_update_roi_indices(blendMap_64f);
 
 		// Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiIndexList);
-		Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiList_seam);
-		
+		// Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiList_seam);
+		cv::Mat curImagef;
+		cv::Mat curImagef_64f;
+		cv::cvtColor(curImage, curImagef, cv::COLOR_BGR2YCrCb);
+		curImagef.convertTo(curImagef_64f, CV_64F);
+
 		///////////////////////
 		// cv::Mat curImage_tmp = ColorSpace::YCbCr2RGB(curImagef);
 		// cv::imwrite("./conv_y2rgb_"+to_string(i)+".jpg", curImage_tmp);
@@ -852,7 +856,8 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 
 		if (applyRemapping)
 		{
-			updateImagebyRemapping(curImagef, curIndex);
+			// updateImagebyRemapping(curImagef, curIndex);
+			updateImagebyRemapping(curImagef_64f, curIndex);
 		}
 
 
@@ -861,7 +866,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		
 		//A: 
 		// 1. multiply YCbCr by blend-seam map here
-		cv::multiply(curImagef, blendMap_64f, curImagef);
+		cv::multiply(curImagef_64f, blendMap_64f, curImagef);
 
 		//B:
 		// 1. convert image back to RGB
@@ -869,7 +874,9 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		// 3. multiply RGB by blend-seam map here
 		// 4. convert back to YCbCr
 
-		double* dataPtr = (double*)curImagef.data;
+		// double* dataPtr = (double*)curImagef.data;
+		double* dataPtr = (double*)curImagef_64f.data;
+		
 		Mat warpMap;
 		if (needIndividuals)
 		{
@@ -896,13 +903,13 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 			int Gi = min(255, max(0,G));
 			int Ri = min(255, max(0,R));
 
-			basePtr[3*index+0] = Bi;
-			basePtr[3*index+1] = Gi;
-			basePtr[3*index+2] = Ri;
+			// basePtr[3*index+0] = Bi;
+			// basePtr[3*index+1] = Gi;
+			// basePtr[3*index+2] = Ri;
 
-			// basePtr[3*index+0] += Bi;
-			// basePtr[3*index+1] += Gi;
-			// basePtr[3*index+2] += Ri;
+			basePtr[3*index+0] += Bi;
+			basePtr[3*index+1] += Gi;
+			basePtr[3*index+2] += Ri;
 
 			if (needIndividuals)
 			{
