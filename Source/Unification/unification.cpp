@@ -824,7 +824,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		Mat warpMap;
 		if (needIndividuals)
 		{
-			warpMap = Mat(rows, cols, CV_8UC4, Scalar(BKGRNDPIX,BKGRNDPIX,BKGRNDPIX,0));
+			warpMap = Mat(rows, cols, CV_8UC3, Scalar(BKGRNDPIX,BKGRNDPIX,BKGRNDPIX,0));
 		}
 		uchar *warpPtr = (uchar*)warpMap.data;
 		for (int j = 0; j < roiIndexList.size(); j ++)
@@ -851,10 +851,10 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 				//warpMap.at<Vec4b>(r,c)[0] = bgr[0];  //! B
 				//warpMap.at<Vec4b>(r,c)[1] = bgr[1];  //! G
 				//warpMap.at<Vec4b>(r,c)[2] = bgr[2];  //! R
-				warpPtr[4*index+3] = 255;
-				warpPtr[4*index+0] = Bi;
-				warpPtr[4*index+1] = Gi;
-				warpPtr[4*index+2] = Ri;
+				// warpPtr[4*index+3] = 255;
+				warpPtr[3*index+0] = Bi;
+				warpPtr[3*index+1] = Gi;
+				warpPtr[3*index+2] = Ri;
 			}
 		}
 		if (needIndividuals)
