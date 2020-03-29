@@ -808,6 +808,8 @@ std::vector<int> _helper_update_roi_indices(cv::Mat& blendMapf)
 	return ret;
 }
 
+#define DBG
+
 void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyRemapping)
 {
 	int rows = _imgSize.height, cols = _imgSize.width;
@@ -843,11 +845,11 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		vector<int> roiList_seam = _helper_update_roi_indices(blendMap_64f);
 
 		// Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiIndexList);
-		// Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiList_seam);
-		cv::Mat curImagef;
-		cv::Mat curImagef_64f;
-		cv::cvtColor(curImage, curImagef, cv::COLOR_RGB2YCrCb);
-		curImagef.convertTo(curImagef_64f, CV_64F);
+		Mat curImagef_64f = ColorSpace::RGB2YCbCr(curImage, roiList_seam);
+		// cv::Mat curImagef;
+		// cv::Mat curImagef_64f;
+		// cv::cvtColor(curImage, curImagef, cv::COLOR_RGB2YCrCb);
+		// curImagef.convertTo(curImagef_64f, CV_64F);
 
 		if (applyRemapping)
 		{
@@ -858,14 +860,14 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		// 1. multiply YCbCr by blend-seam map here
 		cv::multiply(curImagef_64f, blendMap_64f, curImagef_64f);
 
+#ifdef DBG
 		// test ycbcr after blend map mutliplication:
-		// 1. convert to u8
-		// 2. YCbCr -> RGB
 		cv::Mat tmp_u8;
 		cv::Mat tmp_rgb;
 		curImagef_64f.convertTo(tmp_u8, CV_8U);
 		cv::cvtColor(tmp_u8, tmp_rgb, cv::COLOR_YCrCb2RGB);
 		cv::imwrite("./_tmp_mult_"+to_string(i)+".jpg", tmp_rgb);
+#endif
 
 		// double* dataPtr = (double*)curImagef.data;
 		double* dataPtr = (double*)curImagef_64f.data;
