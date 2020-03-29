@@ -817,8 +817,8 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 
 	uchar *basePtr = (uchar*)baseImage.data;
 	//! warp images in the order of their ID, namely imgNo
-	vector<int> indices = {0,2,1};
-	// vector<int> indices = {1,0};
+	// vector<int> indices = {0,2,1};
+	vector<int> indices = {1,0};
 
 	for (int i = 0; i < _imgNum; i ++)
 	{
