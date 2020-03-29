@@ -846,7 +846,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		// Mat curImagef = ColorSpace::RGB2YCbCr(curImage, roiList_seam);
 		cv::Mat curImagef;
 		cv::Mat curImagef_64f;
-		cv::cvtColor(curImage, curImagef, cv::COLOR_BGR2YCrCb);
+		cv::cvtColor(curImage, curImagef, cv::COLOR_RGB2YCrCb);
 		curImagef.convertTo(curImagef_64f, CV_64F);
 
 		///////////////////////
@@ -876,7 +876,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 
 		// double* dataPtr = (double*)curImagef.data;
 		double* dataPtr = (double*)curImagef_64f.data;
-		
+
 		Mat warpMap;
 		if (needIndividuals)
 		{
