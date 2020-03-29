@@ -872,10 +872,10 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		tmp_rgb_64f.convertTo(tmp_rgb_u8, CV_8U);
 		cv::imwrite("./_tmp_mult_"+to_string(i)+".jpg", tmp_rgb_u8);
 
-		cv::cuda::add(baseImage, tmp_rgb_u8, baseImage);
+		cv::add(baseImage, tmp_rgb_u8, baseImage);
 
 		continue;
-		
+
 		// double* dataPtr = (double*)curImagef.data;
 		double* dataPtr = (double*)curImagef_64f.data;
 
