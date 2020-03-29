@@ -821,9 +821,14 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 			updateImagebyRemapping(curImagef, curIndex);
 		}
 
-		// 0. upload blend-seam map		
+		// 0. upload blend-seam map	
+		cv::Mat blendMapf;
+		cv::FileStorage fs(Utils::baseDir + "Images/res_seam_"+to_string(im_num) + ".json",FileStorage::READ);
+		fs["blend_mat"] >> blendMapf;
+		
 		//A: 
 		// 1. multiply YCbCr by blend-seam map here
+		cv::multiply(curImagef, blendMapf, curImagef);
 
 		//B:
 		// 1. convert image back to RGB
@@ -841,6 +846,7 @@ void ToneUnifier::applyColorRemappingforImages(bool needIndividuals, bool applyR
 		uchar *warpPtr = (uchar*)warpMap.data;
 
 		// 5. update ROI index list to only those present in blend-seam map
+		_helper_update_roi_indices(roiIndexList, blendMapf);
 
 		for (int j = 0; j < roiIndexList.size(); j ++)
 		{
